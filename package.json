@@ -1,0 +1,20 @@
+{
+  "name": "rekonclient",
+  "version": "1.0.0",
+  "description": "Client api for ferbotz rekon",
+  "main": "src/app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ferbotzsdk/ReKonClient.git"
+  },
+  "keywords": ["remoteConfig" , "config" , "admin panel" , "config client"],
+  "author": "Vishal B",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "ferbotz-certify": "^1.0.1",
+    "joi": "^17.13.3",
+    "mongoose": "^8.6.3"
+  }
+}
