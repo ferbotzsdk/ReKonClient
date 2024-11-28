@@ -15,14 +15,14 @@ router.get("/:bucketName/get", async (req, res) => {
                         bucketName: bucketName,
                         key: key
                     }
-                ).select('key config')
+                ).select('key config -_id')
                 if (nnoe(keyConfig)) {
                     res.status(200).json(keyConfig);
                 }else {
                     res.status(404).json({message: `key ${key} not found`})
                 }
             }else{
-                const configValues = await configDbModel.find({bucketName: bucketName}).select('key config')
+                const configValues = await configDbModel.find({bucketName: bucketName}).select('key config -_id')
                 res.status(200).json(configValues)
             }
         }else {
