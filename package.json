@@ -1,6 +1,6 @@
 {
   "name": "ferbotz-rekon-client",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Client api for ferbotz rekon",
   "main": "src/app.js",
   "repository": {
