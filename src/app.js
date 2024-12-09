@@ -1,7 +1,7 @@
 const mExpress = require('express')
 let mongooseConnection = null
 let configDbModel = null
-let bucketDbModel = null
+let configMethods = null
 
 function initFerbotzRekonClient(config , onConnectionStatus){
     const app = config.express || mExpress();
@@ -27,12 +27,10 @@ function initFerbotzRekonClient(config , onConnectionStatus){
         console.log("mongo failed to init " + err )
     })
     mongooseConnection.on('open', () => {
-        console.log("mongodb connected")
-        const mBucketDbModel = require('./data/api/config/model/BucketDbModel');
-        bucketDbModel = mBucketDbModel(mongooseConnection)
+        console.log("mongodb rekon client connected")
         const mConfigDbModel = require('./data/api/config/model/ConfigDbModel');
         configDbModel = mConfigDbModel(mongooseConnection)
-        // Start server
+        configMethods = require('./data/sdk/admin/method/ConfigMethods')
         app.use("/rekon/config", require('./data/api/config/router/ConfigRouter').configRouter)
         if(!config.express){
             app.listen(config.port, () => {
@@ -51,7 +49,7 @@ function initFerbotzRekonClient(config , onConnectionStatus){
 
 module.exports = { 
     initFerbotzRekonClient,
-    get bucketDbModel() { return bucketDbModel; },
     get configDbModel() { return configDbModel; },
+    get configMethods() { return configMethods; }
 };
 
