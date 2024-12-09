@@ -15,7 +15,7 @@ function initFerbotzRekonClient(config , onConnectionStatus){
         useUnifiedTopology: true,
     });
 
-    mongooseConnection.on('error', (err) => {
+    mongooseConnection.on('error', e => {
         if (onConnectionStatus) {
             onConnectionStatus(
                 {
