@@ -3,7 +3,7 @@ let mongooseConnection = null
 let configDbModel = null
 let bucketDbModel = null
 
-function initFerbotzRekonClient(config){
+function initFerbotzRekonClient(config , onConnectionStatus){
     const app = config.express || mExpress();
     app.use(mExpress.json());
 
@@ -16,6 +16,14 @@ function initFerbotzRekonClient(config){
     });
 
     mongooseConnection.on('error', (err) => {
+        if (onConnectionStatus) {
+            onConnectionStatus(
+                {
+                    code : 1,
+                    error : e
+                }
+            );
+        }
         console.log("mongo failed to init " + err )
     })
     mongooseConnection.on('open', () => {
@@ -29,7 +37,14 @@ function initFerbotzRekonClient(config){
         if(!config.express){
             app.listen(config.port, () => {
                 console.log(`Listening on port ${config.port}`);
+                if (onConnectionStatus) {
+                    onConnectionStatus(null);
+                }
             });
+        }else{
+            if (onConnectionStatus) {
+                onConnectionStatus(null);
+            }
         }
     })
 }
