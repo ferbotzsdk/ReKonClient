@@ -9,7 +9,7 @@ router.get("/:bucketName/get", async (req, res) => {
         const config = await readConfig(req.params.bucketName , configKeys )
         res.status(200).json(config)
     }catch(error){
-        res.status(error.code).json({message: error.message});
+        res.status(error.code || 500).json({message: error.message});
     }
 })
 
