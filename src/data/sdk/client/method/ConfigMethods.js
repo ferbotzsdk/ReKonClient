@@ -22,3 +22,7 @@ async function readConfig(bucketName , configKeys){
         throwError(404,"Enter bucket name");
     }
 }
+
+module.exports = {
+    readConfig
+}
