@@ -1,6 +1,7 @@
 const mExpress = require('express')
 let mongooseConnection = null
 let configDbModel = null
+let configMethods = null
 
 function initFerbotzRekonClient(config , onConnectionStatus){
     const app = config.express || mExpress();
@@ -28,6 +29,7 @@ function initFerbotzRekonClient(config , onConnectionStatus){
         console.log("mongodb rekon client connected")
         const mConfigDbModel = require('./data/api/config/model/ConfigDbModel');
         configDbModel = mConfigDbModel(mongooseConnection)
+        configMethods = require('./data/sdk/client/method/ConfigMethods')
         app.use("/rekon/config", require('./data/api/config/router/ConfigRouter').configRouter)
         if(!config.express){
             app.listen(config.port, () => {
@@ -44,8 +46,9 @@ function initFerbotzRekonClient(config , onConnectionStatus){
     })
 }
 
-module.exports = { 
+module.exports = {
     initFerbotzRekonClient,
-    get configDbModel() { return configDbModel; }
+    get configDbModel() { return configDbModel; },
+    get configMethods() { return configMethods; }
 };
 
