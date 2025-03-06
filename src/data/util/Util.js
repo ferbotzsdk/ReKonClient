@@ -15,8 +15,13 @@ function version(version){
     return Number.isInteger(v) && v >= 0 && v <= Number.MAX_VALUE ? v : null;
 }
 
+function getValidValue(value) {
+    return value !== null && value !== undefined && !Number.isNaN(value) ? value : null;
+}
+
 module.exports = {
     nnoe : notNullOrEmpty,
     throwError,
-    version
+    version,
+    getValidValue
 }

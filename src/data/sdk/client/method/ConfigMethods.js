@@ -1,5 +1,5 @@
 const configDbModel = require('../../../../app').configDbModel;
-const { nnoe , throwError} = require('../../../util/Util')
+const { nnoe , throwError , getValidValue} = require('../../../util/Util')
 
 async function readConfig(bucketName , configKeys , version){
     if (nnoe(bucketName)){
@@ -22,7 +22,7 @@ async function readConfig(bucketName , configKeys , version){
                 const result = await configDbModel.find(query, projection).lean();
                 return result.map(item => ({
                     key: item.key,
-                    config: item.config[item.config.length - 1]?.data || null
+                    config: getValidValue(item.config[item.config.length - 1]?.data)
                 }));
             }else{
                 const query = { bucketName: bucketName };
@@ -39,7 +39,7 @@ async function readConfig(bucketName , configKeys , version){
                 const result = await configDbModel.find(query, projection).lean();
                 return result.map(item => ({
                     key: item.key,
-                    config: item.config[item.config.length - 1]?.data || null
+                    config: getValidValue(item.config[item.config.length - 1]?.data)
                 }));
             }
         }catch (error) {
