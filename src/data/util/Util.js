@@ -10,7 +10,13 @@ function throwError(code , message , causeCode){
     throw e;
 }
 
+function version(version){
+    const v = Number(version);
+    return Number.isInteger(v) && v >= 0 && v <= Number.MAX_VALUE ? v : null;
+}
+
 module.exports = {
     nnoe : notNullOrEmpty,
-    throwError
+    throwError,
+    version
 }
